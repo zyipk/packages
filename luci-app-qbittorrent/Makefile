@@ -16,7 +16,11 @@ LUCI_DEPENDS:= \
 	+PACKAGE_luci-app-qbittorrent_dynamic:qbittorrent \
 	+PACKAGE_luci-app-qbittorrentEE_dynamic:qBittorrent-Enhanced-Edition
 
+<<<<<<< HEAD
 define Package/luci-app-qbittorrent/config
+=======
+define Package/$(PKG_NAME)/config
+>>>>>>> 847c67db61fd4d31c639f5b69ce0712b8024a91b
 	choice
 		prompt "Build Version Selection"
 		default PACKAGE_luci-app-qbittorrent_static if arm||aarch64||x86_64
