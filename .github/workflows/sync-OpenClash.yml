@@ -20,4 +20,4 @@ jobs:
             vernesong/OpenClash@master
           FILES: |
             sync/=OpenClash/
-          TOKEN: ${{ secrets.APT }}
+          TOKEN: ${{ secrets.PT }}
