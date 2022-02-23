@@ -16,14 +16,11 @@ LUCI_DEPENDS:= \
 	+PACKAGE_luci-app-qbittorrent_dynamic:qbittorrent \
 	+PACKAGE_luci-app-qbittorrentEE_dynamic:qBittorrent-Enhanced-Edition
 
-include $(TOPDIR)/feeds/luci/luci.mk
-
-define Package/$(PKG_NAME)/config
+define Package/luci-app-qbittorrent/config
 	choice
 		prompt "Build Version Selection"
 		default PACKAGE_luci-app-qbittorrent_static if arm||aarch64||x86_64
 		default PACKAGE_luci-app-qbittorrent_dynamic if !(arm||aarch64||x86_64)
-		default PACKAGE_luci-app-qbittorrentEE_dynamic
 
 		config PACKAGE_luci-app-qbittorrent_static
 			bool "Static Build"
@@ -37,5 +34,7 @@ define Package/$(PKG_NAME)/config
 			
 	endchoice
 endef
+
+include $(TOPDIR)/feeds/luci/luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
