@@ -16,6 +16,8 @@ LUCI_DEPENDS:= \
 	+PACKAGE_luci-app-qbittorrent_dynamic:qbittorrent \
 	+PACKAGE_luci-app-qbittorrentEE_dynamic:qBittorrent-Enhanced-Edition
 
+include $(TOPDIR)/feeds/luci/luci.mk
+
 define Package/$(PKG_NAME)/config
 	choice
 		prompt "Build Version Selection"
@@ -35,7 +37,5 @@ define Package/$(PKG_NAME)/config
 			
 	endchoice
 endef
-
-include ../../luci.mk
 
 # call BuildPackage - OpenWrt buildroot signature
