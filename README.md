@@ -1,2 +1,1 @@
-# packages
-常用的OpenWrt插件
+# 自用OpenWrt插件
