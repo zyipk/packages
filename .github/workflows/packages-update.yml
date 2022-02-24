@@ -1,0 +1,41 @@
+name: packages-update
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+        fetch-depth: 0
+    - name: Create local changes
+      run: |
+        git clone https://github.com/sbwml/openwrt-alist --depth=1 openwrt-alist
+        rm -rf alist luci-app-alist
+        git clone https://github.com/vernesong/OpenClash --depth=1 OpenClash
+        rm -rf luci-app-openclash
+        rm -rf luci-app-unblockneteasemusic
+        git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic --depth=1 luci-app-unblockneteasemusic 
+        mv ./openwrt-alist/alist ./alist
+        mv ./openwrt-alist/luci-app-alist ./luci-app-alist
+        mv ./luci-app-alist/po/zh_Hans ./luci-app-alist/po/zh-cn
+        rm -rf openwrt-alist
+        mv ./OpenClash/luci-app-openclash ./luci-app-openclash
+        rm -rf OpenClash
+        cd luci-app-unblockneteasemusic
+        rm -rf .git .github
+    - name: Commit files
+      run: |
+        git config --global user.email "zyipk@vip.qq.com"
+        git config --global user.name "zyipk"
+        git add .
+        git commit -m "packages update" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.ACTIONS_TRIGGER_PAT }}
+        branch: master
