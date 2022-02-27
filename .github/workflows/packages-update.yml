@@ -14,16 +14,10 @@ jobs:
         fetch-depth: 0
     - name: Create local changes
       run: |
-        git clone https://github.com/sbwml/openwrt-alist --depth=1 openwrt-alist
-        rm -rf alist luci-app-alist
         git clone https://github.com/vernesong/OpenClash --depth=1 OpenClash
         rm -rf luci-app-openclash
         rm -rf luci-app-unblockneteasemusic
         git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic --depth=1 luci-app-unblockneteasemusic 
-        mv ./openwrt-alist/alist ./alist
-        mv ./openwrt-alist/luci-app-alist ./luci-app-alist
-        mv ./luci-app-alist/po/zh_Hans ./luci-app-alist/po/zh-cn
-        rm -rf openwrt-alist
         mv ./OpenClash/luci-app-openclash ./luci-app-openclash
         rm -rf OpenClash
         cd luci-app-unblockneteasemusic
