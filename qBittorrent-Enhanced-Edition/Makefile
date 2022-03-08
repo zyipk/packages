@@ -18,6 +18,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/qBittorrent-Enhanced-Edition-release-$(PKG_VERSION)
 
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
+PKG_CPE_ID:=cpe:/a:$(PKG_NAME):$(PKG_NAME)
 
 PKG_BUILD_DEPENDS:=qttools
 
@@ -26,6 +27,7 @@ PKG_INSTALL:=1
 PKG_USE_MIPS16:=0
 
 include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/cmake.mk
 
 define Package/$(PKG_NAME)
 	SECTION:=net
@@ -42,6 +44,7 @@ define Package/$(PKG_NAME)
 		+zlib
 	TITLE:=bittorrent client programmed in C++ / Qt
 	URL:=https://www.qbittorrent.org/
+	PROVIDES:=$(PKG_NAME)
 endef
 
 define Package/$(PKG_NAME)/description
@@ -52,21 +55,43 @@ define Package/$(PKG_NAME)/description
   well as many features.
 endef
 
-CONFIGURE_ARGS += \
-	--disable-gui \
-	--enable-stacktrace=no \
-	--with-boost=$(STAGING_DIR)/usr
+CMAKE_OPTIONS += \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DQT6=OFF \
+	-DSTACKTRACE=OFF \
+	-DWEBUI=ON \
+	-DGUI=OFF \
+	-DVERBOSE_CONFIGURE=ON
 
-MAKE_VARS += \
-	INSTALL_ROOT="$(PKG_INSTALL_DIR)"
 
 
-TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed
+# The pcre2 is compiled with support for mips16
+ifdef CONFIG_USE_MIPS16
+  TARGET_CFLAGS += -minterlink-mips16
+endif
+
+# Support the glibc
+ifdef CONFIG_USE_GLIBC
+  TARGET_LDFLAGS += -ldl -lrt -lpthread
+endif
+
+TARGET_CFLAGS += -std=c++17 -ffunction-sections -fdata-sections -flto
+TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed -flto
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
 	$(SED) '/<context>/{:a;N;/<\/context>/!ba;/\/gui\//d}' `ls $(PKG_BUILD_DIR)/src/lang/qbittorrent_*.ts`
 endef
+
+
+# The pentium-mmx with lto will build failed on qt6
+ifeq ($(ARCH),i386)
+  ifneq ($(findstring pentium-mmx,$(CONFIG_CPU_TYPE)),)
+    TARGET_CFLAGS := $(filter-out -flto,$(TARGET_CFLAGS))
+    TARGET_LDFLAGS := $(filter-out -flto,$(TARGET_LDFLAGS))
+  endif
+endif
+
 
 define Package/$(PKG_NAME)/conffiles
 /etc/qBittorrent
