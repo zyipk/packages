@@ -17,17 +17,22 @@ jobs:
         git clone https://github.com/vernesong/OpenClash --depth=1 OpenClash
         rm -rf luci-app-openclash
         rm -rf luci-app-unblockneteasemusic
+        rm -rf luci-theme-argon
         git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic --depth=1 luci-app-unblockneteasemusic 
         mv ./OpenClash/luci-app-openclash ./luci-app-openclash
         rm -rf OpenClash
         cd luci-app-unblockneteasemusic
+        rm -rf .git .github
+        cd ..
+        git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon --depth=1 luci-theme-argon
+        cd luci-theme-argon
         rm -rf .git .github
     - name: Commit files
       run: |
         git config --global user.email "zyipk@vip.qq.com"
         git config --global user.name "zyipk"
         git add .
-        git commit -m "packages update" -a
+        git commit -m "auto update" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
