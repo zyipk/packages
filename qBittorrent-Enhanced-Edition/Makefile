@@ -1,9 +1,3 @@
-#
-# Copyright (C) 2017-2020
-#
-# This is free software, licensed under the GNU General Public License v2.
-#
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=qBittorrent-Enhanced-Edition
@@ -36,7 +30,6 @@ define Package/$(PKG_NAME)
 	DEPENDS:=+libgcc +libstdcpp \
 		+rblibtorrent \
 		+libopenssl \
-		+python3 \
 		+qt5-core \
 		+qt5-network \
 		+qt5-xml \
@@ -63,8 +56,6 @@ CMAKE_OPTIONS += \
 	-DGUI=OFF \
 	-DVERBOSE_CONFIGURE=ON
 
-
-
 # The pcre2 is compiled with support for mips16
 ifdef CONFIG_USE_MIPS16
   TARGET_CFLAGS += -minterlink-mips16
@@ -78,12 +69,6 @@ endif
 TARGET_CFLAGS += -std=c++17 -ffunction-sections -fdata-sections -flto
 TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed -flto
 
-define Build/Prepare
-	$(call Build/Prepare/Default)
-	$(SED) '/<context>/{:a;N;/<\/context>/!ba;/\/gui\//d}' `ls $(PKG_BUILD_DIR)/src/lang/qbittorrent_*.ts`
-endef
-
-
 # The pentium-mmx with lto will build failed on qt6
 ifeq ($(ARCH),i386)
   ifneq ($(findstring pentium-mmx,$(CONFIG_CPU_TYPE)),)
@@ -91,11 +76,6 @@ ifeq ($(ARCH),i386)
     TARGET_LDFLAGS := $(filter-out -flto,$(TARGET_LDFLAGS))
   endif
 endif
-
-
-define Package/$(PKG_NAME)/conffiles
-/etc/qBittorrent
-endef
 
 define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/usr/bin
