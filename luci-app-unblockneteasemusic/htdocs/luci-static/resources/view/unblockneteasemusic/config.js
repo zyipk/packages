@@ -123,6 +123,7 @@ return view.extend({
 		o = s.option(form.Value, 'joox_cookie', _('JOOX Cookie'),
 			_('在 joox.com 获取，需要 wmid 和 session_key 值。'));
 		o.placeholder = 'wmid=; session_key=';
+		o.rmempty = false;
 		o.depends({'music_source': 'joox', '!contains': true});
 
 		o = s.option(form.Value, 'migu_cookie', _('Migu Cookie'),
@@ -132,6 +133,7 @@ return view.extend({
 		o = s.option(form.Value, 'qq_cookie', _('QQ Cookie'),
 			_('在 y.qq.com 获取，需要 uin 和 qm_keyst 值。'));
 		o.placeholder = 'uin=; qm_keyst=';
+		o.rmempty = false;
 		o.depends({'music_source': 'qq', '!contains': true});
 
 		o = s.option(form.Value, 'youtube_key', _('Youtube API Key'),
