@@ -37,7 +37,7 @@ define Package/$(PKG_NAME)
 		+zlib
 	TITLE:=bittorrent client programmed in C++ / Qt
 	URL:=https://www.qbittorrent.org/
-	PROVIDES:=$(PKG_NAME)
+	PROVIDES:=qBittorrent
 endef
 
 define Package/$(PKG_NAME)/description
