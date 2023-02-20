@@ -12,7 +12,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/qBittorrent-Enhanced-Edition-release-$(PKG_VERSION)
 
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
-PKG_CPE_ID:=cpe:/a:$(PKG_NAME):$(PKG_NAME)
+PKG_CPE_ID:=cpe:/a:qbittorrent:qbittorrent
 
 PKG_BUILD_DEPENDS:=qttools
 
