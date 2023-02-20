@@ -7,5 +7,6 @@ uci -q batch <<-EOF >/dev/null
 	commit ucitrack
 EOF
 
-rm -f /tmp/luci-indexcache*
+/etc/init.d/qbittorrent stop
+rm -f /tmp/luci-indexcache
 exit 0
