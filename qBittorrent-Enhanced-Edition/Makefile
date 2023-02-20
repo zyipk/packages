@@ -12,7 +12,7 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/qBittorrent-Enhanced-Edition-release-$(PKG_VERSION)
 
 PKG_LICENSE:=GPL-2.0+
 PKG_LICENSE_FILES:=COPYING
-PKG_CPE_ID:=cpe:/a:qbittorrent:qbittorrent
+PKG_CPE_ID:=cpe:/a:$(PKG_NAME):$(PKG_NAME)
 
 PKG_BUILD_DEPENDS:=qttools
 
@@ -37,7 +37,7 @@ define Package/$(PKG_NAME)
 		+zlib
 	TITLE:=bittorrent client programmed in C++ / Qt
 	URL:=https://www.qbittorrent.org/
-	PROVIDES:=qBittorrent
+	PROVIDES:=$(PKG_NAME)
 endef
 
 define Package/$(PKG_NAME)/description
