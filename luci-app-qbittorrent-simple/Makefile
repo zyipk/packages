@@ -30,7 +30,7 @@ define Package/$(PKG_NAME)/config
 			bool "Dynamic Build"
 
 		config PACKAGE_luci-app-qbittorrentEE-simple_dynamic
-			bool "Dynamic Build"
+			bool "QBEE Dynamic Build"
 
 	endchoice
 endef
