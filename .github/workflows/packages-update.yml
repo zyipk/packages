@@ -17,15 +17,10 @@ jobs:
         git clone https://github.com/vernesong/OpenClash --depth=1 OpenClash
         rm -rf luci-app-openclash
         rm -rf luci-app-unblockneteasemusic
-        rm -rf luci-theme-argon
         git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic --depth=1 -b master luci-app-unblockneteasemusic 
         mv ./OpenClash/luci-app-openclash ./luci-app-openclash
         rm -rf OpenClash
         cd luci-app-unblockneteasemusic
-        rm -rf .git .github
-        cd ..
-        git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon --depth=1 luci-theme-argon
-        cd luci-theme-argon
         rm -rf .git .github
     - name: Commit files
       run: |
